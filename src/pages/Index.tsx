@@ -32,12 +32,17 @@ const Index = () => {
   }, []);
 
   const fetchContent = async () => {
+    console.log("Fetching homepage content...");
     const { data, error } = await supabase
       .from("homepage_content")
       .select("*")
+      .limit(1)
       .single();
 
+    console.log("Homepage content result:", { data, error });
+
     if (error) {
+      console.error("Error loading content:", error);
       toast({
         title: "Error loading content",
         description: error.message,
@@ -47,6 +52,7 @@ const Index = () => {
     }
 
     if (data) {
+      console.log("Setting content:", data);
       setContent({
         heading: data.heading,
         paragraph: data.paragraph,
@@ -55,12 +61,16 @@ const Index = () => {
   };
 
   const fetchCategories = async () => {
+    console.log("Fetching categories...");
     const { data, error } = await supabase
       .from("category_boxes")
       .select("*")
       .order("order_index");
 
+    console.log("Categories result:", { data, error });
+
     if (error) {
+      console.error("Error loading categories:", error);
       toast({
         title: "Error loading categories",
         description: error.message,
@@ -70,6 +80,7 @@ const Index = () => {
     }
 
     if (data) {
+      console.log("Setting categories:", data);
       setCategories(data);
     }
   };
