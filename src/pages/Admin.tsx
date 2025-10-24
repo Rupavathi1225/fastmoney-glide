@@ -255,7 +255,6 @@ const Admin = () => {
         {/* Web Results Management */}
         <div className="mb-6">
           <WebResultsAdmin
-            categories={categories}
             webResults={webResults}
             onRefresh={fetchContent}
           />

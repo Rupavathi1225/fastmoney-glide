@@ -24,45 +24,21 @@ interface CategoryInfo {
 }
 
 const WebResult = () => {
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const categoryId = searchParams.get("category");
   const [results, setResults] = useState<WebResult[]>([]);
-  const [categoryInfo, setCategoryInfo] = useState<CategoryInfo | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const resultsPerPage = 10;
 
   useEffect(() => {
-    if (categoryId) {
-      fetchResults();
-      fetchCategoryInfo();
-    }
-  }, [categoryId]);
-
-  const fetchCategoryInfo = async () => {
-    if (!categoryId) return;
-
-    const { data, error } = await supabase
-      .from("category_boxes")
-      .select("title, description")
-      .eq("id", categoryId)
-      .single();
-
-    if (data && !error) {
-      setCategoryInfo(data);
-    }
-  };
+    fetchResults();
+  }, []);
 
   const fetchResults = async () => {
-    if (!categoryId) return;
-    
     setLoading(true);
     const { data, error } = await supabase
       .from("web_results")
       .select("*")
-      .eq("category_id", categoryId)
       .order("display_order", { ascending: true });
 
     if (data && !error) {
@@ -110,7 +86,7 @@ const WebResult = () => {
                 <span className="text-primary font-bold text-lg">W</span>
               </div>
               <span className="text-foreground font-semibold text-lg">
-                {categoryInfo?.title || "Web Results"}
+                Web Results
               </span>
             </div>
             <div className="flex-1 max-w-2xl">

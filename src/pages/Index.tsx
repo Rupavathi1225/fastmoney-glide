@@ -129,7 +129,7 @@ const Index = () => {
                   <CategoryBox
                     id={category.id}
                     title={category.title}
-                    onClick={() => navigate(`/webresult?category=${category.id}`)}
+                    onClick={() => navigate('/webresult')}
                   />
                 </div>
               ))}

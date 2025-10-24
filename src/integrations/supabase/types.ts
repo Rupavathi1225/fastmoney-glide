@@ -67,7 +67,7 @@ export type Database = {
       }
       web_results: {
         Row: {
-          category_id: string
+          category_id: string | null
           created_at: string
           description: string
           display_order: number
@@ -80,7 +80,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
-          category_id: string
+          category_id?: string | null
           created_at?: string
           description: string
           display_order?: number
@@ -93,7 +93,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
-          category_id?: string
+          category_id?: string | null
           created_at?: string
           description?: string
           display_order?: number
