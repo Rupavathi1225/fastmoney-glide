@@ -132,6 +132,9 @@ const WebResult = () => {
                     Sponsored
                   </Badge>
                 </div>
+                {featuredResult.link && (
+                  <p className="text-sm text-primary/70 mb-1 truncate">{featuredResult.link}</p>
+                )}
                 <h2 className="text-xl font-bold text-foreground mb-2 flex items-center gap-2">
                   {featuredResult.title}
                   <ExternalLink className="w-4 h-4" />
@@ -178,6 +181,9 @@ const WebResult = () => {
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-sm text-muted-foreground">{result.name}</span>
                     </div>
+                    {result.link && (
+                      <p className="text-xs text-primary/70 mb-1 truncate">{result.link}</p>
+                    )}
                     <h3 className="text-lg font-semibold text-primary hover:underline mb-1 flex items-center gap-2">
                       {result.title}
                       {result.link && <ExternalLink className="w-3 h-3" />}
