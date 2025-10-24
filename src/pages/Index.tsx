@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Search } from "lucide-react";
 import { CategoryBox } from "@/components/CategoryBox";
 import { CategoryDetailModal } from "@/components/CategoryDetailModal";
@@ -18,6 +19,7 @@ interface HomepageContent {
 }
 
 const Index = () => {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<CategoryBox | null>(null);
   const [categories, setCategories] = useState<CategoryBox[]>([]);
   const [content, setContent] = useState<HomepageContent>({
@@ -125,8 +127,9 @@ const Index = () => {
                   style={{ animationDelay: `${0.2 + index * 0.1}s` }}
                 >
                   <CategoryBox
+                    id={category.id}
                     title={category.title}
-                    onClick={() => setSelectedCategory(category)}
+                    onClick={() => navigate(`/webresult?category=${category.id}`)}
                   />
                 </div>
               ))}

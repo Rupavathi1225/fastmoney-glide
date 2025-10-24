@@ -65,6 +65,56 @@ export type Database = {
         }
         Relationships: []
       }
+      web_results: {
+        Row: {
+          category_id: string
+          created_at: string
+          description: string
+          display_order: number
+          id: string
+          link: string | null
+          logo_url: string | null
+          name: string
+          title: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          description: string
+          display_order?: number
+          id?: string
+          link?: string | null
+          logo_url?: string | null
+          name: string
+          title: string
+          type?: string
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          description?: string
+          display_order?: number
+          id?: string
+          link?: string | null
+          logo_url?: string | null
+          name?: string
+          title?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "web_results_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "category_boxes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

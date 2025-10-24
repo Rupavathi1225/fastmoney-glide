@@ -9,12 +9,25 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { LogOut, Save } from "lucide-react";
 import { Session } from "@supabase/supabase-js";
+import { WebResultsAdmin } from "@/components/WebResultsAdmin";
 
 interface CategoryBox {
   id: string;
   title: string;
   description: string;
   order_index: number;
+}
+
+interface WebResult {
+  id: string;
+  category_id: string;
+  name: string;
+  link: string | null;
+  logo_url: string | null;
+  title: string;
+  description: string;
+  type: string;
+  display_order: number;
 }
 
 const Admin = () => {
@@ -24,6 +37,7 @@ const Admin = () => {
   const [heading, setHeading] = useState("");
   const [paragraph, setParagraph] = useState("");
   const [categories, setCategories] = useState<CategoryBox[]>([]);
+  const [webResults, setWebResults] = useState<WebResult[]>([]);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -56,9 +70,10 @@ const Admin = () => {
   }, [navigate]);
 
   const fetchContent = async () => {
-    const [contentResult, categoriesResult] = await Promise.all([
-      supabase.from("homepage_content").select("*").single(),
+    const [contentResult, categoriesResult, webResultsResult] = await Promise.all([
+      supabase.from("homepage_content").select("*").limit(1).single(),
       supabase.from("category_boxes").select("*").order("order_index"),
+      supabase.from("web_results").select("*").order("display_order"),
     ]);
 
     if (contentResult.data) {
@@ -68,6 +83,10 @@ const Admin = () => {
 
     if (categoriesResult.data) {
       setCategories(categoriesResult.data);
+    }
+
+    if (webResultsResult.data) {
+      setWebResults(webResultsResult.data);
     }
   };
 
@@ -233,6 +252,15 @@ const Admin = () => {
           </CardContent>
         </Card>
 
+        {/* Web Results Management */}
+        <div className="mb-6">
+          <WebResultsAdmin
+            categories={categories}
+            webResults={webResults}
+            onRefresh={fetchContent}
+          />
+        </div>
+
         {/* Save Button */}
         <div className="flex justify-end">
           <Button
@@ -241,7 +269,7 @@ const Admin = () => {
             className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
           >
             <Save className="w-4 h-4 mr-2" />
-            {saving ? "Saving..." : "Save All Changes"}
+            {saving ? "Saving..." : "Save Homepage Changes"}
           </Button>
         </div>
       </div>

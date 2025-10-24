@@ -2,11 +2,12 @@ import { ChevronRight } from "lucide-react";
 import { Card } from "./ui/card";
 
 interface CategoryBoxProps {
+  id: string;
   title: string;
   onClick: () => void;
 }
 
-export const CategoryBox = ({ title, onClick }: CategoryBoxProps) => {
+export const CategoryBox = ({ id, title, onClick }: CategoryBoxProps) => {
   return (
     <Card
       onClick={onClick}
