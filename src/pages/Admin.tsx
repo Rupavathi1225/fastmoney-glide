@@ -75,6 +75,17 @@ const Admin = () => {
     setSaving(true);
 
     try {
+      // Get the homepage content ID first
+      const { data: contentData } = await supabase
+        .from("homepage_content")
+        .select("id")
+        .limit(1)
+        .single();
+
+      if (!contentData) {
+        throw new Error("Homepage content not found");
+      }
+
       // Update homepage content
       const { error: contentError } = await supabase
         .from("homepage_content")
@@ -82,7 +93,7 @@ const Admin = () => {
           heading,
           paragraph,
         })
-        .eq("id", (await supabase.from("homepage_content").select("id").single()).data?.id);
+        .eq("id", contentData.id);
 
       if (contentError) throw contentError;
 
@@ -101,8 +112,11 @@ const Admin = () => {
 
       toast({
         title: "Success!",
-        description: "Content updated successfully.",
+        description: "Content updated successfully. Changes are live on the homepage!",
       });
+
+      // Refresh the content to show updated timestamps
+      await fetchContent();
     } catch (error: any) {
       toast({
         title: "Error",
