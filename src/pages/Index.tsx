@@ -94,7 +94,7 @@ const Index = () => {
         <header className="flex items-center justify-between mb-16 animate-fade-in">
           <div>
             <h2 className="text-2xl font-bold text-foreground">FastMoney</h2>
-            <p className="text-sm text-muted-foreground">fastmoney.vercel.app</p>
+            <p className="text-sm text-muted-foreground"></p>
           </div>
           <button className="p-2 hover:bg-secondary/50 rounded-lg transition-colors">
             <Search className="w-6 h-6 text-primary" />
